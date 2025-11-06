@@ -1,0 +1,21 @@
+name: freee work record
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - name: Run freee work record script
+        env:
+          FREEE_ACCESS_TOKEN: ${{ secrets.FREEE_ACCESS_TOKEN }}
+          FREEE_EMPLOYEE_ID: ${{ vars.FREEE_EMPLOYEE_ID }}
+        run: node scripts/freee_work_record.js
